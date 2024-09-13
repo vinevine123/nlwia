@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="/11.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@phosphor-icons/web@latest/dist/phosphor-icons.css"
+  />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .light-mode {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .dark-mode {
+      background-color: #000000;
+      color: #ffffff;
+    }
+    #app {
+      padding: 20px;
+    }
+    button {
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 10px;
+    }
+    .mode-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 36px;
+      transition: color 0.3s;
+    }
+    .dark-mode .ph-moon {
+      color: #ffffff;
+    }
+    .tabs {
+      display: flex;
+      cursor: pointer;
+    }
+    .tab {
+      padding: 10px 20px;
+      margin-right: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px 5px 0 0;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .tab.active {
+      background: #BFEfFF;
+      border-bottom: 1px solid transparent;
+    }
+  </style>
+  <title>Vine Shorts Summary</title>
+</head>
+<body class="light-mode">
+  <div id="app">
+    <button class="mode-toggle" id="modeToggle" title="Switch Mode">
+      <i class="ph ph-sun" id="modeIcon"></i>
+    </button>
+    <img src="/11.svg" alt="Logo" />
+    <h1>Vine Shorts Summary</h1>
+    
+    <div class="tabs">
+      <div class="tab active" data-tab="summary">Resumo</div>
+      <div class="tab" data-tab="videos">Vídeos</div>
+    </div>
+
+    <div id="summary" class="tab-content active">
+      <form id="form">
+        <input type="url" id="url" placeholder="URL do vídeo" />
+        <button title="Resumir">
+          <i class="ph ph-play"></i>
+        </button>
+      </form>
+      <h2>Resumo</h2>
+      <p id="content" class="placeholder">Escolha um short para resumir</p>
+    </div>
+
+    <div id="videos" class="tab-content">
+      <h2>Vídeos em Inglês</h2>
+      <div class="video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/xZtadif15WU" frameborder="0" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/kovFVOikc0s" frameborder="0" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/stJH6XgImoU" frameborder="0" allowfullscreen></iframe>
+
+      </div>
+    </div>
+  </div>
+  <script type="module" src="web/main.js"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script>
+    document.getElementById('modeToggle').addEventListener('click', function() {
+      const body = document.body;
+      const modeIcon = document.getElementById('modeIcon');
+      const isDarkMode = body.classList.toggle('dark-mode');
+      body.classList.toggle('light-mode', !isDarkMode);
+      modeIcon.classList.toggle('ph-sun', !isDarkMode);
+      modeIcon.classList.toggle('ph-moon', isDarkMode);
+      this.title = isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    });
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        const targetContent = document.getElementById(tab.getAttribute('data-tab'));
+        tab.classList.add('active');
+        targetContent.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
